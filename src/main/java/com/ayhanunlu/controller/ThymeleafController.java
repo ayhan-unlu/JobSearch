@@ -18,5 +18,6 @@ public class ThymeleafController {
     @GetMapping("/")
     public String dashboard(){
         return "/dashboard";
+
     }
 }
