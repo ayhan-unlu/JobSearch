@@ -1,6 +1,7 @@
 package com.ayhanunlu.service.impl;
 
 import com.ayhanunlu.data.entity.UserEntity;
+import com.ayhanunlu.enums.Role;
 import com.ayhanunlu.repository.UserRepository;
 import com.ayhanunlu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
             UserEntity defaultAdminEntity = new UserEntity();
             defaultAdminEntity.setUsername("a");
             defaultAdminEntity.setPassword(passwordEncoder.encode("a"));
+            defaultAdminEntity.setRole(Role.ADMIN);
             userRepository.save(defaultAdminEntity);
         }
     }

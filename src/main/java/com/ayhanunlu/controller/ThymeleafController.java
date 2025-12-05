@@ -17,6 +17,6 @@ public class ThymeleafController {
 
     @GetMapping("/")
     public String dashboard(){
-        return "/dashboard";//dashboard.html is under templates folder directly
+        return "/dashboard";
     }
 }
