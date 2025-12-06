@@ -30,9 +30,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
-                .authorizeHttpRequests(auth->auth.anyRequest().authenticated())
+                .authorizeHttpRequests(auth->auth
+                        .requestMatchers("/login","/css/**","/images/**").permitAll()
+                        .requestMatchers("/admin_dashboard").hasRole("ADMIN")
+                        .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
-                .formLogin(form->form.permitAll())
+                .formLogin(form->form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/admin_dashboard",true)
+                        .permitAll())
                 .logout(logout->logout.permitAll());
         return httpSecurity.build();
     }

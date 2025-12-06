@@ -1,5 +1,6 @@
 package com.ayhanunlu.service.impl;
 
+import com.ayhanunlu.data.dto.AdminSessionDto;
 import com.ayhanunlu.data.entity.UserEntity;
 import com.ayhanunlu.enums.Role;
 import com.ayhanunlu.repository.UserRepository;
@@ -26,6 +27,16 @@ public class UserServiceImpl implements UserService {
             defaultAdminEntity.setRole(Role.ADMIN);
             userRepository.save(defaultAdminEntity);
         }
+    }
+
+    @Override
+    public AdminSessionDto getCurrentAdmin(UserEntity userEntity){
+        AdminSessionDto adminSessionDto = new AdminSessionDto();
+        adminSessionDto.setId(userEntity.getId());
+        adminSessionDto.setUsername(userEntity.getUsername());
+        adminSessionDto.setRole(userEntity.getRole());
+
+        return adminSessionDto;
     }
 
 }

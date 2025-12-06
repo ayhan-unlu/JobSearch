@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">
+        Welcome to Job Search Login Page
+    </h1>
+</div>
+
+<!-- http://localhost:8080/login -->
+
+<div>
+    <form th:action="@{/login}" method="post">
+        <label th:text="'Username'"></label>
+        <input type="text" name="username" required>
+        <label th:text="'Password'"></label>
+        <input type="password" name="password" required>
+        <button type="submit" th:text="'Login'"></button>
+    </form>
+</div>
+</body>
+</html>
