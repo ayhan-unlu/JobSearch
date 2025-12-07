@@ -3,6 +3,7 @@ package com.ayhanunlu.controller;
 import com.ayhanunlu.data.dto.AdminSessionDto;
 import com.ayhanunlu.data.dto.LoginDto;
 import com.ayhanunlu.data.dto.LoginResult;
+import com.ayhanunlu.data.dto.RegisterDto;
 import com.ayhanunlu.data.entity.UserEntity;
 import com.ayhanunlu.enums.LoginResponse;
 import com.ayhanunlu.enums.Role;
@@ -95,6 +96,16 @@ public class ThymeleafController {
     }
 */
 
+    /// REGISTER
+    /// http://localhost:8080/register
+    @GetMapping("/register")
+    public String register(Model model){
+        model.addAttribute("registerDto", new RegisterDto());
+        return "register";
+    }
+
+
+
     @GetMapping("/admin_dashboard")
     public String adminDashboard(HttpSession httpSession, Model model, @AuthenticationPrincipal UserDetails userDetails){
         AdminSessionDto adminSessionDto = (AdminSessionDto) httpSession.getAttribute("adminSessionDto");
@@ -105,6 +116,15 @@ public class ThymeleafController {
         }
         model.addAttribute("adminSessionDto",adminSessionDto);
         return "admin_dashboard";
+    }
+    /// POST REGISTER
+    ///  http://localhost:8080/register
+    @PostMapping("/register")
+    public String postRegister(Model model){
+        System.out.println("POST REGISTER METHOD started");
+        model.addAttribute("registerDto", new RegisterDto());
+        System.out.println("POST REGISTER METHOD finished");
+        return "register";
     }
 
 }

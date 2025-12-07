@@ -2,29 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>Registration Page</title>
 </head>
 <body>
 <div class="container mt-5">
     <h1 class="text-center">
-        Welcome to Job Search Login Page
+        Welcome to the Registration Page
     </h1>
 </div>
 
-<!-- http://localhost:8080/login -->
-
 <div>
-    <form th:action="@{/login}" th:object="${loginDto}" method="post">
+    <form th:action="@{/register}" th:object="${registerDto}" method="post">
         <label th:text="'Username'"></label>
         <input type="text" th:field="*{username}" required>
         <label th:text="'Password'"></label>
         <input type="password" th:field="*{password}" required>
-        <button type="submit" th:text="'Login'"></button>
+        <button type="submit" th:text="'Register'"></button>
     </form>
 </div>
 
 <div class="text-center mt-4">
-    <a th:href="@{register}" class="btn btn-primary">Register</a>
+    <a th:href="@{/login}" class="btn btn-primary"> Back to Login Page</a>
 </div>
 </body>
 </html>
