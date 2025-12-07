@@ -1,6 +1,7 @@
 package com.ayhanunlu.service.impl;
 
 import com.ayhanunlu.data.dto.AdminSessionDto;
+import com.ayhanunlu.data.dto.RegisterDto;
 import com.ayhanunlu.data.entity.UserEntity;
 import com.ayhanunlu.enums.Role;
 import com.ayhanunlu.repository.UserRepository;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AdminSessionDto getCurrentAdmin(UserEntity userEntity){
+    public AdminSessionDto getCurrentAdmin(UserEntity userEntity) {
         AdminSessionDto adminSessionDto = new AdminSessionDto();
         adminSessionDto.setId(userEntity.getId());
         adminSessionDto.setUsername(userEntity.getUsername());
@@ -39,5 +40,25 @@ public class UserServiceImpl implements UserService {
         return adminSessionDto;
     }
 
+    @Override
+    public boolean registerNewUser(RegisterDto registerDto) {
+
+        if(!isUsernameAlreadyInUse(registerDto)){
+
+        UserEntity registeredUserEntity = new UserEntity();
+        registeredUserEntity.setUsername(registerDto.getUsername());
+        registeredUserEntity.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        registeredUserEntity.setRole(Role.USER);
+
+        userRepository.save(registeredUserEntity);
+        return true;
+        }
+
+        return false;
+    }
+
+    private boolean isUsernameAlreadyInUse(RegisterDto registerDto){
+        return userRepository.findByUsername(registerDto.getUsername()).isPresent();
+    }
 
 }

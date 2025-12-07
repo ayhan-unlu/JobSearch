@@ -57,7 +57,7 @@ public class ThymeleafController {
     public String login(Model model) {
         System.out.println("get MAPPING JUST STARTED");
 
-        model.addAttribute("loginDto",new LoginDto());
+        model.addAttribute("loginDto", new LoginDto());
         System.out.println("get MAPPING JUST finished");
 
         return "login";
@@ -99,32 +99,38 @@ public class ThymeleafController {
     /// REGISTER
     /// http://localhost:8080/register
     @GetMapping("/register")
-    public String register(Model model){
+    public String register(Model model) {
         model.addAttribute("registerDto", new RegisterDto());
         return "register";
     }
-
 
 
     @GetMapping("/admin_dashboard")
-    public String adminDashboard(HttpSession httpSession, Model model, @AuthenticationPrincipal UserDetails userDetails){
+    public String adminDashboard(HttpSession httpSession, Model model, @AuthenticationPrincipal UserDetails userDetails) {
         AdminSessionDto adminSessionDto = (AdminSessionDto) httpSession.getAttribute("adminSessionDto");
 
-        if(adminSessionDto == null && userDetails != null){
-            adminSessionDto = new AdminSessionDto(null,userDetails.getUsername(), Role.ADMIN);
-            httpSession.setAttribute("adminSessionDto",adminSessionDto);
+        if (adminSessionDto == null && userDetails != null) {
+            adminSessionDto = new AdminSessionDto(null, userDetails.getUsername(), Role.ADMIN);
+            httpSession.setAttribute("adminSessionDto", adminSessionDto);
         }
-        model.addAttribute("adminSessionDto",adminSessionDto);
+        model.addAttribute("adminSessionDto", adminSessionDto);
         return "admin_dashboard";
     }
+
     /// POST REGISTER
     ///  http://localhost:8080/register
     @PostMapping("/register")
-    public String postRegister(Model model){
+    public String postRegister(@ModelAttribute RegisterDto registerDto, Model model) {
         System.out.println("POST REGISTER METHOD started");
-        model.addAttribute("registerDto", new RegisterDto());
-        System.out.println("POST REGISTER METHOD finished");
-        return "register";
+        //   model.addAttribute("registerDto", new RegisterDto());
+        if (userService.registerNewUser(registerDto)) {
+            System.out.println("POST REGISTER METHOD finished");
+            return "redirect:/login?registered=true";
+        } else {
+            System.out.println("POST REGISTER METHOD finished");
+            model.addAttribute("errorMessage","Username already exists.");
+            return "register";
+        }
     }
 
 }
