@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminSessionDto {
+public class SessionDto {
     private Long id;
     private String username;
     private Role role;

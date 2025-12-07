@@ -1,11 +1,8 @@
 package com.ayhanunlu.controller;
 
-import com.ayhanunlu.data.dto.AdminSessionDto;
+import com.ayhanunlu.data.dto.SessionDto;
 import com.ayhanunlu.data.dto.LoginDto;
-import com.ayhanunlu.data.dto.LoginResult;
 import com.ayhanunlu.data.dto.RegisterDto;
-import com.ayhanunlu.data.entity.UserEntity;
-import com.ayhanunlu.enums.LoginResponse;
 import com.ayhanunlu.enums.Role;
 import com.ayhanunlu.repository.UserRepository;
 import com.ayhanunlu.service.AuthenticationService;
@@ -19,8 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import static com.ayhanunlu.enums.Role.ADMIN;
 
 @Controller
 public class ThymeleafController {
@@ -90,7 +85,7 @@ public class ThymeleafController {
 /*
     @GetMapping("/admin_dashboard")
     public String adminDashboard(HttpSession httpSession, Model model) {
-        AdminSessionDto adminSessionDto = (AdminSessionDto) httpSession.getAttribute("adminSessionDto");
+        SessionDto adminSessionDto = (SessionDto) httpSession.getAttribute("adminSessionDto");
         model.addAttribute("adminSessionDto", adminSessionDto);
         return "admin_dashboard";
     }
@@ -104,17 +99,32 @@ public class ThymeleafController {
         return "register";
     }
 
+    /// ADMIN DASHBOARD
+    /// http://localhost:8080/admin_dashbaord
 
     @GetMapping("/admin_dashboard")
     public String adminDashboard(HttpSession httpSession, Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        AdminSessionDto adminSessionDto = (AdminSessionDto) httpSession.getAttribute("adminSessionDto");
+        SessionDto sessionDto = (SessionDto) httpSession.getAttribute("adminSessionDto");
 
-        if (adminSessionDto == null && userDetails != null) {
-            adminSessionDto = new AdminSessionDto(null, userDetails.getUsername(), Role.ADMIN);
-            httpSession.setAttribute("adminSessionDto", adminSessionDto);
+        if (sessionDto == null && userDetails != null) {
+            sessionDto = new SessionDto(null, userDetails.getUsername(), Role.ADMIN);
+            httpSession.setAttribute("adminSessionDto", sessionDto);
         }
-        model.addAttribute("adminSessionDto", adminSessionDto);
+        model.addAttribute("adminSessionDto", sessionDto);
         return "admin_dashboard";
+    }
+
+    /// USER DASHBOARD
+    /// http://localhost:8080/user_dashboard
+    @GetMapping("/user_dashboard")
+    public String userDashBoard(HttpSession httpSession, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        SessionDto sessionDto = (SessionDto)httpSession.getAttribute("userSessionDto");
+        if(sessionDto == null && userDetails != null){
+            sessionDto = new SessionDto(null,userDetails.getUsername(),Role.USER);
+            httpSession.setAttribute("userSessionDto",sessionDto);
+        }
+        model.addAttribute("userSessionDto",sessionDto);
+        return "user_dashboard";
     }
 
     /// POST REGISTER

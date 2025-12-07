@@ -1,6 +1,6 @@
 package com.ayhanunlu.service.impl;
 
-import com.ayhanunlu.data.dto.AdminSessionDto;
+import com.ayhanunlu.data.dto.SessionDto;
 import com.ayhanunlu.data.dto.RegisterDto;
 import com.ayhanunlu.data.entity.UserEntity;
 import com.ayhanunlu.enums.Role;
@@ -31,13 +31,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AdminSessionDto getCurrentAdmin(UserEntity userEntity) {
-        AdminSessionDto adminSessionDto = new AdminSessionDto();
-        adminSessionDto.setId(userEntity.getId());
-        adminSessionDto.setUsername(userEntity.getUsername());
-        adminSessionDto.setRole(userEntity.getRole());
+    public SessionDto getCurrentAdmin(UserEntity userEntity) {
+        SessionDto sessionDto = new SessionDto();
+        sessionDto.setId(userEntity.getId());
+        sessionDto.setUsername(userEntity.getUsername());
+        sessionDto.setRole(userEntity.getRole());
 
-        return adminSessionDto;
+        return sessionDto;
     }
 
     @Override

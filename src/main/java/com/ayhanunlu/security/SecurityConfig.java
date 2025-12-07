@@ -59,11 +59,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register","/css/**", "/images/**").permitAll()
                         .requestMatchers("/admin_dashboard").hasRole("ADMIN")
+                        .requestMatchers("/user_dashboard").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/admin_dashboard", true)
+                        .defaultSuccessUrl("/user_dashboard",true)
                         .permitAll()
                 )
                 .logout(logout -> logout.permitAll());
