@@ -7,8 +7,22 @@
 <body>
 <div class="container mt-5">
     <h1>
-        <span th:text="'Welcome User ' + ${userSessionDto.username} + ' to the User Dashboard'"></span>
+        <span th:text="'Welcome User ' + *{userSessionDto.username} + ' to the User Dashboard'"></span>
     </h1>
+
+</div>
+
+<!--
+<div class="text-center mt-4">
+    <a th:href="@{/logout}" class="btn btn-primary" th:text="'Logout'"></a>
+</div>
+-->
+
+<div class="text-center mt-4">
+    <form th:action="@{/logout}" th:method="post">
+        <button type="submit" th:text="'Logout'"></button>
+
+    </form>
 
 </div>
 </body>

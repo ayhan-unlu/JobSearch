@@ -64,11 +64,25 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/admin_dashboard", true)
-                        .defaultSuccessUrl("/user_dashboard",true)
+//                        .defaultSuccessUrl("/admin_dashboard", true)
+//                        .defaultSuccessUrl("/user_dashboard",true)
+                                .successHandler((request,response,authentication)->{
+                                    String role = authentication.getAuthorities()
+                                            .iterator().next().getAuthority();
+                                    if(role.equals("ROLE_ADMIN")){
+                                        response.sendRedirect("/admin_dashboard");
+                                    }else{
+                                        response.sendRedirect("/user_dashboard");
+                                    }
+                                })
                         .permitAll()
                 )
-                .logout(logout -> logout.permitAll());
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout=true")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .permitAll());
         return httpSecurity.build();
     }
 
