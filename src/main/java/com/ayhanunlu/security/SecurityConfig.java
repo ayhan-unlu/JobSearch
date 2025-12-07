@@ -18,6 +18,7 @@ public class SecurityConfig {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+/*
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(customUserDetailsService);
@@ -26,9 +27,20 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 
+*/
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(customUserDetailsService);
+        //  daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
+        return daoAuthenticationProvider;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
+/*
         httpSecurity
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/css/**", "/images/**").permitAll()
@@ -41,6 +53,20 @@ public class SecurityConfig {
 //                        .permitAll())
                         .disable()
                         .logout(logout -> logout.permitAll()));
+*/
+
+        httpSecurity
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/css/**", "/images/**").permitAll()
+                        .requestMatchers("/admin_dashboard").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/admin_dashboard", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout.permitAll());
         return httpSecurity.build();
     }
 
