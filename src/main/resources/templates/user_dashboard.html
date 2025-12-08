@@ -10,6 +10,12 @@
         <span th:text="'Welcome User ' + *{userSessionDto.username} + ' to the User Dashboard'"></span>
     </h1>
 
+    <h2 th:text="'User Details'"></h2>
+    <h3 th:text="'User Id: ' + ${userSessionDto.id}"></h3>
+    <h3 th:text="'Username: '+${userSessionDto.username}"></h3>
+    <h3 th:text="'Role: '+${userSessionDto.role}"></h3>
+
+
 </div>
 
 <!--

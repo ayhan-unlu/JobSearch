@@ -3,6 +3,7 @@ package com.ayhanunlu.controller;
 import com.ayhanunlu.data.dto.SessionDto;
 import com.ayhanunlu.data.dto.LoginDto;
 import com.ayhanunlu.data.dto.RegisterDto;
+import com.ayhanunlu.data.entity.UserEntity;
 import com.ayhanunlu.enums.Role;
 import com.ayhanunlu.repository.UserRepository;
 import com.ayhanunlu.service.AuthenticationService;
@@ -108,7 +109,9 @@ public class ThymeleafController {
         SessionDto sessionDto = (SessionDto) httpSession.getAttribute("adminSessionDto");
 
         if (sessionDto == null && userDetails != null) {
-            sessionDto = new SessionDto(null, userDetails.getUsername(), Role.ADMIN);
+//            sessionDto = new SessionDto(null, userDetails.getUsername(), Role.ADMIN);
+            UserEntity adminEntity = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+            sessionDto =new SessionDto(adminEntity.getId(),adminEntity.getUsername(),adminEntity.getRole());
             httpSession.setAttribute("adminSessionDto", sessionDto);
         }
         model.addAttribute("adminSessionDto", sessionDto);
@@ -121,7 +124,9 @@ public class ThymeleafController {
     public String userDashBoard(HttpSession httpSession, Model model, @AuthenticationPrincipal UserDetails userDetails){
         SessionDto sessionDto = (SessionDto)httpSession.getAttribute("userSessionDto");
         if(sessionDto == null && userDetails != null){
-            sessionDto = new SessionDto(null,userDetails.getUsername(),Role.USER);
+            UserEntity userEntity = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+            sessionDto =new SessionDto(userEntity.getId(),userEntity.getUsername(),userEntity.getRole());
+//            sessionDto = new SessionDto(null,userDetails.getUsername(),Role.USER);
             httpSession.setAttribute("userSessionDto",sessionDto);
         }
         model.addAttribute("userSessionDto",sessionDto);
