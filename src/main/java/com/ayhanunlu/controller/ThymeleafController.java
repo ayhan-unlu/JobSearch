@@ -53,6 +53,7 @@ public class ThymeleafController {
         System.out.println("get MAPPING JUST STARTED");
 
         model.addAttribute("loginDto", new LoginDto());
+
         System.out.println("get MAPPING JUST finished");
 
         return "login";

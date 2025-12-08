@@ -1,5 +1,6 @@
 package com.ayhanunlu.security;
 
+import com.ayhanunlu.service.CustomAuthenticationProvider;
 import com.ayhanunlu.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,11 +13,20 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
+
+    @Autowired
+    private CustomAuthenticationProvider customAuthenticationProvider;
+/*
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
+*/
 
 /*
     @Bean
@@ -29,6 +39,7 @@ public class SecurityConfig {
 
 */
 
+/*
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(customUserDetailsService);
@@ -36,6 +47,7 @@ public class SecurityConfig {
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         return daoAuthenticationProvider;
     }
+*/
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -56,27 +68,32 @@ public class SecurityConfig {
 */
 
         httpSecurity
+                .authenticationProvider(authenticationProvider());
+
+        httpSecurity
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register","/css/**", "/images/**").permitAll()
+                        .requestMatchers("/login", "/register", "/css/**", "/images/**").permitAll()
                         .requestMatchers("/admin_dashboard").hasRole("ADMIN")
                         .requestMatchers("/user_dashboard").hasRole("USER")
                         .anyRequest().authenticated()
-                )
+                );
+        httpSecurity
                 .formLogin(form -> form
-                        .loginPage("/login")
+                                .loginPage("/login")
 //                        .defaultSuccessUrl("/admin_dashboard", true)
 //                        .defaultSuccessUrl("/user_dashboard",true)
-                                .successHandler((request,response,authentication)->{
+                                .successHandler((request, response, authentication) -> {
                                     String role = authentication.getAuthorities()
                                             .iterator().next().getAuthority();
-                                    if(role.equals("ROLE_ADMIN")){
+                                    if (role.equals("ROLE_ADMIN")) {
                                         response.sendRedirect("/admin_dashboard");
-                                    }else{
+                                    } else {
                                         response.sendRedirect("/user_dashboard");
                                     }
                                 })
-                        .permitAll()
-                )
+                                .permitAll()
+                );
+        httpSecurity
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout=true")
@@ -84,6 +101,11 @@ public class SecurityConfig {
                         .clearAuthentication(true)
                         .permitAll());
         return httpSecurity.build();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider(){
+        return customAuthenticationProvider;
     }
 
 }
