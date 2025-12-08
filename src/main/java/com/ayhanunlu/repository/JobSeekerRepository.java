@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JobSeekerRepository extends JpaRepository<JobSeekerEntity, Long> {
     JobSeekerEntity findByUserEntity(UserEntity userEntity);
+
 }
