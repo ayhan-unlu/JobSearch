@@ -10,6 +10,7 @@ import com.ayhanunlu.enums.Role;
 import com.ayhanunlu.repository.JobSeekerRepository;
 import com.ayhanunlu.repository.UserRepository;
 import com.ayhanunlu.service.AuthenticationService;
+import com.ayhanunlu.service.impl.JobSeekerServiceImpl;
 import com.ayhanunlu.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class ThymeleafController {
     private final UserServiceImpl userService;
@@ -30,6 +33,8 @@ public class ThymeleafController {
     private UserRepository userRepository;
     @Autowired
     private JobSeekerRepository jobSeekerRepository;
+    @Autowired
+    private JobSeekerServiceImpl jobSeekerService;
 
     public ThymeleafController(UserServiceImpl userService) {
         this.userService = userService;
@@ -119,7 +124,36 @@ public class ThymeleafController {
             sessionDto = userService.createSessionDto(adminEntity);
             httpSession.setAttribute("adminSessionDto", sessionDto);
         }
+        List<JobSeekerEntity> allJobSeekerEntitiesList = jobSeekerService.getAllJobSeekerEntities();
+//        JobSeekerEntity jobSeekerEntity = new JobSeekerEntity();
         model.addAttribute("adminSessionDto", sessionDto);
+//        model.addAttribute("jobSeekerEntity",jobSeekerEntity);
+        model.addAttribute("jobSeekerEntityList",allJobSeekerEntitiesList);
+        return "admin_dashboard";
+    }
+
+    /// MILITARY SERVICE FILTER
+    /// http://localhost:8080/admin_dashboard
+    @GetMapping("/admin_dashboard/military_service_filter")
+    public String adminDashboardMilitaryServiceFilter(HttpSession httpSession, Model model ,@AuthenticationPrincipal UserDetails userDetails){
+        SessionDto sessionDto = (SessionDto) httpSession.getAttribute("adminSessionDto");
+        model.addAttribute("adminSessionDto",sessionDto);
+
+        List<JobSeekerEntity> militaryServiceFilteredJobSeekerEntityList=jobSeekerService.getJobSeekerEntitiesFinishedMilitaryService();
+        model.addAttribute("jobSeekerEntityList",militaryServiceFilteredJobSeekerEntityList);
+
+        return "admin_dashboard";
+    }
+
+    /// 5 EXPERIENCE YEAR FILTER
+    /// http://localhost:8080/admin_dashboard
+    @GetMapping("/admin_dashboard/five_experience_year_filter")
+    public String adminDashBoardFiveExperienceYearFilter(HttpSession httpSession, Model model, @AuthenticationPrincipal UserDetails userDetails){
+        SessionDto sessionDto = (SessionDto) httpSession.getAttribute("adminSessionDto");
+        model.addAttribute("adminSessionDto",sessionDto);
+
+        List<JobSeekerEntity> fiveExperienceYearFilteredJobSeekerEntityList=jobSeekerService.getJobSeekerEntitiesHaveExperience5PlusYears();
+        model.addAttribute("jobSeekerEntityList",fiveExperienceYearFilteredJobSeekerEntityList);
         return "admin_dashboard";
     }
 

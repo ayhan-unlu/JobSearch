@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Military Service Filter Page</title>
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="text-center" th:text="'JOB SEEKER LIST WHICH FINISHED MILITARY SERVICE'"></h1>
+  <table class="table table-striped table-hover table-bordered">
+    <thead>
+    <tr>
+      <th th:text="'ID'"></th>
+      <th th:text="'USER ID'"></th>
+      <th th:text="'NAME'"></th>
+      <th th:text="'SURNAME'"></th>
+      <th th:text="'PHONE'"></th>
+      <th th:text="'FIELD OF EXPERIENCE'"></th>
+      <th th:text="'EXPERIENCE YEAR'"></th>
+      <th th:text="'MILITARY SERVICE FINISHED'"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="jobSeekerEntity : ${filteredJobSeekerEntityList}">
+      <td th:text="${jobSeekerEntity.id}"></td>
+      <td th:text="${jobSeekerEntity.userEntity.id}"></td>
+      <td th:text="${jobSeekerEntity.name}"></td>
+      <td th:text="${jobSeekerEntity.}"></td>
+      <td th:text="${jobSeekerEntity.}"></td>
+      <td th:text="${jobSeekerEntity.}"></td>
+      <td th:text="${jobSeekerEntity.}"></td>
+      <td th:text="${jobSeekerEntity.}"></td>
+
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+</body>
+</html>
