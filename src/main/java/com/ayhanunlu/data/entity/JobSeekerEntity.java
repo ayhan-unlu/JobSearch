@@ -43,6 +43,6 @@ public class JobSeekerEntity implements Serializable {
     @Column(name="experience_year")
     private int experienceYear;
 
-    @Column(name="is_military_service_finished")
-    private boolean isMilitaryServiceFinished;
+    @Column(name="military_service_finished")
+    private boolean militaryServiceFinished;
 }

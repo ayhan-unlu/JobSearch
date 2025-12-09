@@ -14,6 +14,24 @@
     <h3 th:text="'User Id: ' + ${userSessionDto.id}"></h3>
     <h3 th:text="'Username: '+${userSessionDto.username}"></h3>
     <h3 th:text="'Role: '+${userSessionDto.role}"></h3>
+    <h3 th:text="'Status: ' + ${userSessionDto.status}"></h3>
+    <h3 th:text="'Failed Login Attempts: ' + ${userSessionDto.failedLoginAttempts}"></h3>
+    <h3 th:text="'Name: ' + ${jobSeekerEntity.name}"></h3>
+    <h3 th:text="'Surname: ' + ${jobSeekerEntity.surname}"></h3>
+    <h3 th:text="'Phone: ' + ${jobSeekerEntity.phone}"></h3>
+    <h3 th:text="'Field of Experience: ' + ${jobSeekerEntity.fieldOfExperience}"></h3>
+    <h3 th:text="'Experience Year: ' + ${jobSeekerEntity.experienceYear}"></h3>
+    <h3 th:text="'Military Service Finished: ' + ${jobSeekerEntity.isMilitaryServiceFinished()}"></h3>
+
+
+
+
+
+
+
+
+
+
 
 
 </div>

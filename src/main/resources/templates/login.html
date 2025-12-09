@@ -16,6 +16,7 @@
 <div>
     <form th:action="@{/login}" th:object="${loginDto}" method="post">
         <label th:text="'Username'"></label>
+
         <input type="text" th:field="*{username}" required>
         <label th:text="'Password'"></label>
         <input type="password" th:field="*{password}" required>

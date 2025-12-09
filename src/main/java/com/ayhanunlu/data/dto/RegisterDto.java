@@ -8,6 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterDto {
-    String username;
-    String password;
+    private String username;
+    private String password;
+    private String name;
+    private String surname;
+    private String phone;
+    private String fieldOfExperience;
+    private int experienceYear;
+    private boolean militaryServiceFinished;
 }

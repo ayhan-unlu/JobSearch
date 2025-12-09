@@ -16,10 +16,30 @@
 </div>
 <div>
     <form th:action="@{/register}" th:object="${registerDto}" method="post">
-        <label th:text="'Username'"></label>
+        <label th:text="'Username :'"></label>
         <input type="text" th:field="*{username}" required>
-        <label th:text="'Password'"></label>
+        <br>
+        <label th:text="'Password :'"></label>
         <input type="password" th:field="*{password}" required>
+        <br>
+        <label th:text="'Name :'"></label>
+        <input type="text" th:field="*{name}">
+        <br>
+        <label th:text="'Surname :'"></label>
+        <input type="text" th:field="*{surname}">
+        <br>
+        <label th:text="'Phone :'"></label>
+        <input type="text" th:field="*{phone}">
+        <br>
+        <label th:text="'Field of Experience :'"></label>
+        <input type="text" th:field="*{fieldOfExperience}">
+        <br>
+        <label th:text="'Experience Year :'"></label>
+        <input type="number" th:field="*{experienceYear}">
+        <br>
+        <label th:text="'Is Military Service Finished :'"></label>
+        <input type="checkbox" th:field="*{militaryServiceFinished}">
+        <br>
         <button type="submit" th:text="'Register'"></button>
     </form>
 </div>

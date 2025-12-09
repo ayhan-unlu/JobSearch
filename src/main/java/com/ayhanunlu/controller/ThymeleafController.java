@@ -1,10 +1,13 @@
 package com.ayhanunlu.controller;
 
+import com.ayhanunlu.data.dto.JobSeekerDto;
 import com.ayhanunlu.data.dto.SessionDto;
 import com.ayhanunlu.data.dto.LoginDto;
 import com.ayhanunlu.data.dto.RegisterDto;
+import com.ayhanunlu.data.entity.JobSeekerEntity;
 import com.ayhanunlu.data.entity.UserEntity;
 import com.ayhanunlu.enums.Role;
+import com.ayhanunlu.repository.JobSeekerRepository;
 import com.ayhanunlu.repository.UserRepository;
 import com.ayhanunlu.service.AuthenticationService;
 import com.ayhanunlu.service.impl.UserServiceImpl;
@@ -25,6 +28,8 @@ public class ThymeleafController {
     AuthenticationService authenticationService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JobSeekerRepository jobSeekerRepository;
 
     public ThymeleafController(UserServiceImpl userService) {
         this.userService = userService;
@@ -111,7 +116,7 @@ public class ThymeleafController {
         if (sessionDto == null && userDetails != null) {
 //            sessionDto = new SessionDto(null, userDetails.getUsername(), Role.ADMIN);
             UserEntity adminEntity = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
-            sessionDto =new SessionDto(adminEntity.getId(),adminEntity.getUsername(),adminEntity.getRole());
+            sessionDto = userService.createSessionDto(adminEntity);
             httpSession.setAttribute("adminSessionDto", sessionDto);
         }
         model.addAttribute("adminSessionDto", sessionDto);
@@ -121,15 +126,18 @@ public class ThymeleafController {
     /// USER DASHBOARD
     /// http://localhost:8080/user_dashboard
     @GetMapping("/user_dashboard")
-    public String userDashBoard(HttpSession httpSession, Model model, @AuthenticationPrincipal UserDetails userDetails){
-        SessionDto sessionDto = (SessionDto)httpSession.getAttribute("userSessionDto");
-        if(sessionDto == null && userDetails != null){
+    public String userDashBoard(HttpSession httpSession, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        SessionDto sessionDto = (SessionDto) httpSession.getAttribute("userSessionDto");
+        if (sessionDto == null && userDetails != null) {
             UserEntity userEntity = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
-            sessionDto =new SessionDto(userEntity.getId(),userEntity.getUsername(),userEntity.getRole());
+//            sessionDto = new SessionDto(userEntity.getId(), userEntity.getUsername(), userEntity.getRole(), userEntity.getStatus(), userEntity.getFailedLoginAttempts());
 //            sessionDto = new SessionDto(null,userDetails.getUsername(),Role.USER);
-            httpSession.setAttribute("userSessionDto",sessionDto);
+            sessionDto = userService.createSessionDto(userEntity);
+            httpSession.setAttribute("userSessionDto", sessionDto);
+            JobSeekerEntity jobSeekerEntity = jobSeekerRepository.findByUserEntity(userEntity);
+            model.addAttribute("jobSeekerEntity", jobSeekerEntity);
         }
-        model.addAttribute("userSessionDto",sessionDto);
+        model.addAttribute("userSessionDto", sessionDto);
         return "user_dashboard";
     }
 
@@ -144,7 +152,7 @@ public class ThymeleafController {
             return "redirect:/login?registered=true";
         } else {
             System.out.println("POST REGISTER METHOD finished");
-            model.addAttribute("errorMessage","Username already exists.");
+            model.addAttribute("errorMessage", "Username already exists.");
             return "register";
         }
     }

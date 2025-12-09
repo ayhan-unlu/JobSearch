@@ -1,5 +1,6 @@
 package com.ayhanunlu.service.impl;
 
+import com.ayhanunlu.data.dto.RegisterDto;
 import com.ayhanunlu.data.entity.JobSeekerEntity;
 import com.ayhanunlu.data.entity.UserEntity;
 import com.ayhanunlu.repository.JobSeekerRepository;
@@ -22,6 +23,18 @@ public class JobSeekerServiceImpl implements JobSeekerService {
     private UserRepository userRepository;
 
 
+    @Override
+    public void registerNewJobSeeker(UserEntity registeredUserEntity,RegisterDto registerDto){
+        JobSeekerEntity jobSeekerEntity = new JobSeekerEntity();
+        jobSeekerEntity.setUserEntity(registeredUserEntity);
+        jobSeekerEntity.setName(registerDto.getName());
+        jobSeekerEntity.setSurname(registerDto.getSurname());
+        jobSeekerEntity.setPhone(registerDto.getPhone());
+        jobSeekerEntity.setFieldOfExperience(registerDto.getFieldOfExperience());
+        jobSeekerEntity.setExperienceYear(registerDto.getExperienceYear());
+        jobSeekerEntity.setMilitaryServiceFinished(registerDto.isMilitaryServiceFinished());
+        jobSeekerRepository.save(jobSeekerEntity);
+    }
     @Override
     public JobSeekerEntity getJobSeekerEntityByUserId(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();

@@ -16,5 +16,5 @@ public class JobSeekerDto {
     private String phone;
     private String fieldOfExperience;
     private int experienceYear;
-    private boolean isMilitaryServiceFinished;
+    private boolean militaryServiceFinished;
 }
