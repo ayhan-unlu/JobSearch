@@ -6,6 +6,7 @@ import com.ayhanunlu.data.entity.UserEntity;
 import com.ayhanunlu.repository.JobSeekerRepository;
 import com.ayhanunlu.repository.UserRepository;
 import com.ayhanunlu.service.JobSeekerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class JobSeekerServiceImpl implements JobSeekerService {
 
@@ -34,10 +36,12 @@ public class JobSeekerServiceImpl implements JobSeekerService {
         jobSeekerEntity.setExperienceYear(registerDto.getExperienceYear());
         jobSeekerEntity.setMilitaryServiceFinished(registerDto.isMilitaryServiceFinished());
         jobSeekerRepository.save(jobSeekerEntity);
+        log.info("Job Seeker {} Details are registered", jobSeekerEntity.getUserEntity().getUsername());
     }
     @Override
     public JobSeekerEntity getJobSeekerEntityByUserId(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow();
+        log.info("Job Seeker entity fetched by user id {}",userId);
         return jobSeekerRepository.findByUserEntity(userEntity);
     }
 
@@ -54,6 +58,7 @@ public class JobSeekerServiceImpl implements JobSeekerService {
                 filteredJobSeekerEntities.add(jobSeekerEntity);
             }
         }
+        log.info("All Job Seekers finished Military Service are filtered Successfully");
         return filteredJobSeekerEntities;
     }
 
@@ -65,6 +70,7 @@ public class JobSeekerServiceImpl implements JobSeekerService {
                 filteredJobSeekerEntities.add(jobSeekerEntity);
             }
         }
+        log.info("All Job Seekers with 5+ experience year are filtered Successfully");
         return filteredJobSeekerEntities;
     }
 }

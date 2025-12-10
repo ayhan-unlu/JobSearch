@@ -9,10 +9,12 @@ import com.ayhanunlu.enums.Status;
 import com.ayhanunlu.repository.JobSeekerRepository;
 import com.ayhanunlu.repository.UserRepository;
 import com.ayhanunlu.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService {
             defaultAdminEntity.setRole(Role.ADMIN);
             defaultAdminEntity.setStatus(Status.ACTIVE);
             userRepository.save(defaultAdminEntity);
+            log.info("Default Admin Created");
         }
     }
 
@@ -44,7 +47,7 @@ public class UserServiceImpl implements UserService {
         sessionDto.setId(userEntity.getId());
         sessionDto.setUsername(userEntity.getUsername());
         sessionDto.setRole(userEntity.getRole());
-
+        log.info("Current Admin {} added as session Dto", userEntity.getUsername());
         return sessionDto;
     }
 
@@ -73,9 +76,10 @@ public class UserServiceImpl implements UserService {
 */
 
 //            jobSeekerRepository.save(registeredJobSeekerEntity);
+            log.info("New User {} added as jobSeeker", registeredUserEntity.getUsername());
             return true;
         }
-
+        log.error("Registration of new User {} Failed,User already exists", registerDto.getUsername());
         return false;
     }
 
@@ -83,7 +87,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(registerDto.getUsername()).isPresent();
     }
 
-//    @Override
+    //    @Override
     public SessionDto createSessionDto(UserEntity userEntity) {
         SessionDto sessionDto = new SessionDto();
         sessionDto.setId(userEntity.getId());
@@ -91,6 +95,7 @@ public class UserServiceImpl implements UserService {
         sessionDto.setRole(userEntity.getRole());
         sessionDto.setStatus(userEntity.getStatus());
         sessionDto.setFailedLoginAttempts(userEntity.getFailedLoginAttempts());
+        log.info("Session Dto {} created",sessionDto.getUsername());
         return sessionDto;
     }
 }
