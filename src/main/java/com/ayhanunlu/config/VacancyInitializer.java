@@ -1,6 +1,6 @@
 package com.ayhanunlu.config;
 
-import com.ayhanunlu.service.UserService;
+import com.ayhanunlu.service.VacancyService;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,14 +10,13 @@ import org.springframework.stereotype.Component;
 @Data
 @AllArgsConstructor
 @Component
-public class AdminInitializer {
+public class VacancyInitializer {
 
     @Autowired
-    private UserService userService;
+    private VacancyService vacancyService;
 
     @PostConstruct
-    public void initializeAdmin(){
-        userService.createDefaultAdmin();
-
+    public void initializeVacancies(){
+        vacancyService.createDefaultVacancies();
     }
 }

@@ -9,6 +9,7 @@ import com.ayhanunlu.data.entity.UserEntity;
 import com.ayhanunlu.enums.Role;
 import com.ayhanunlu.repository.JobSeekerRepository;
 import com.ayhanunlu.repository.UserRepository;
+import com.ayhanunlu.repository.VacancyRepository;
 import com.ayhanunlu.service.AuthenticationService;
 import com.ayhanunlu.service.impl.JobSeekerServiceImpl;
 import com.ayhanunlu.service.impl.UserServiceImpl;
@@ -35,6 +36,8 @@ public class ThymeleafController {
     private JobSeekerRepository jobSeekerRepository;
     @Autowired
     private JobSeekerServiceImpl jobSeekerService;
+    @Autowired
+    private VacancyRepository vacancyRepository;
 
     public ThymeleafController(UserServiceImpl userService) {
         this.userService = userService;
@@ -172,6 +175,7 @@ public class ThymeleafController {
             model.addAttribute("jobSeekerEntity", jobSeekerEntity);
         }
         model.addAttribute("userSessionDto", sessionDto);
+        model.addAttribute("vacancyEntityList",vacancyRepository.findAll());
         return "user_dashboard";
     }
 
