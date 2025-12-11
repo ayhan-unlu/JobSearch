@@ -97,8 +97,8 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout=true")
-                        .invalidateHttpSession(true)
-                        .clearAuthentication(true)
+//                        .invalidateHttpSession(true)
+//                        .clearAuthentication(true)
                         .permitAll());
         return httpSecurity.build();
     }

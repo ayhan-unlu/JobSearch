@@ -24,8 +24,31 @@
     <h3 th:text="'Military Service Finished: ' + ${jobSeekerEntity.isMilitaryServiceFinished()}"></h3>
 </div>
 
-<div class="container mt-5" th:text="'VACANCIES'">
+<div class="container mt-5">
+    <h1>
+        <span th:text="'VACANCY LIST'"></span>
+    </h1>
 
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+            <th th:text="'ID'"></th>
+            <th th:text="'TITLE'"></th>
+            <th th:text="'FIELD OF EXPERIENCE'"></th>
+            <th th:text="'EXPERIENCE YEAR'"></th>
+            <th th:text="'MILITARY SERVICE FINISHED'"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vacancyEntity : ${vacancyEntityList}">
+            <td th:text="${vacancyEntity.id}"></td>
+            <td th:text="${vacancyEntity.title}"></td>
+            <td th:text="${vacancyEntity.fieldOfExperience}"></td>
+            <td th:text="${vacancyEntity.experienceYear}"></td>
+            <td th:text="${vacancyEntity.isMilitaryServiceFinished()}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <!--

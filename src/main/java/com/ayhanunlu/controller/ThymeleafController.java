@@ -164,16 +164,23 @@ public class ThymeleafController {
     /// http://localhost:8080/user_dashboard
     @GetMapping("/user_dashboard")
     public String userDashBoard(HttpSession httpSession, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        UserEntity userEntity = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
         SessionDto sessionDto = (SessionDto) httpSession.getAttribute("userSessionDto");
-        if (sessionDto == null && userDetails != null) {
-            UserEntity userEntity = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
-//            sessionDto = new SessionDto(userEntity.getId(), userEntity.getUsername(), userEntity.getRole(), userEntity.getStatus(), userEntity.getFailedLoginAttempts());
-//            sessionDto = new SessionDto(null,userDetails.getUsername(),Role.USER);
+
+        if(sessionDto == null){
             sessionDto = userService.createSessionDto(userEntity);
-            httpSession.setAttribute("userSessionDto", sessionDto);
+            httpSession.setAttribute("userSessionDto",sessionDto);
+        }
+
+//        if (sessionDto == null && userDetails != null) {
+//            UserEntity userEntity = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+////            sessionDto = new SessionDto(userEntity.getId(), userEntity.getUsername(), userEntity.getRole(), userEntity.getStatus(), userEntity.getFailedLoginAttempts());
+////            sessionDto = new SessionDto(null,userDetails.getUsername(),Role.USER);
+//            sessionDto = userService.createSessionDto(userEntity);
+//            httpSession.setAttribute("userSessionDto", sessionDto);
             JobSeekerEntity jobSeekerEntity = jobSeekerRepository.findByUserEntity(userEntity);
             model.addAttribute("jobSeekerEntity", jobSeekerEntity);
-        }
+//        }
         model.addAttribute("userSessionDto", sessionDto);
         model.addAttribute("vacancyEntityList",vacancyRepository.findAll());
         return "user_dashboard";
