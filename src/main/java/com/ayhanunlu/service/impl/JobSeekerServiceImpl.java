@@ -8,6 +8,7 @@ import com.ayhanunlu.repository.UserRepository;
 import com.ayhanunlu.service.JobSeekerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,6 +47,11 @@ public class JobSeekerServiceImpl implements JobSeekerService {
     }
 
     @Override
+    public JobSeekerEntity getJobSeekerEntityByUserDetails(UserDetails userDetails){
+        return jobSeekerRepository.findByUserEntity(userRepository.findByUsername(userDetails.getUsername()).orElseThrow());
+    }
+
+    @Override
     public List<JobSeekerEntity> getAllJobSeekerEntities() {
         return jobSeekerRepository.findAll();
     }
@@ -73,4 +79,6 @@ public class JobSeekerServiceImpl implements JobSeekerService {
         log.info("All Job Seekers with 5+ experience year are filtered Successfully");
         return filteredJobSeekerEntities;
     }
+
+
 }
