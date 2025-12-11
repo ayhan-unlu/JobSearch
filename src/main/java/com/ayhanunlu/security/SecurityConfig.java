@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -84,6 +85,9 @@ public class SecurityConfig {
                                 .failureHandler((request, response, exception) -> {
                                     if (exception instanceof LockedException) {
                                         response.sendRedirect("/login?error=blocked");
+                                    }
+                                    else if (exception instanceof BadCredentialsException) {
+                                        response.sendRedirect("/login?error=badCredentials");
                                     } else {
                                         response.sendRedirect("/login?error");
                                     }

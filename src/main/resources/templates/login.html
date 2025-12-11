@@ -20,6 +20,13 @@
     </span>
 </div>
 
+<div th:if="${param.error}">
+    <span th:if="${param.error[0]=='badCredentials'}"
+    style="color:red;"
+    th:text="'Username or password is wrong'">
+    </span>
+</div>
+
 <div>
     <form th:action="@{/login}" th:object="${loginDto}" method="post">
         <label th:text="'Username'"></label>

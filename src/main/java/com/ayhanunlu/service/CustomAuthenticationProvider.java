@@ -64,7 +64,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                         throw new LockedException("blocked");
                     } else {
                         log.error("Authentication failed: Bad credentials for username {}", foundUserEntity.get().getUsername());
-                        throw new BadCredentialsException(username);
+                        throw new BadCredentialsException("badCredentials");
                     }
                 }
             }

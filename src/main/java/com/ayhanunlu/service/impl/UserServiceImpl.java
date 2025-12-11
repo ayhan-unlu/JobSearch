@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
@@ -95,7 +97,16 @@ public class UserServiceImpl implements UserService {
         sessionDto.setRole(userEntity.getRole());
         sessionDto.setStatus(userEntity.getStatus());
         sessionDto.setFailedLoginAttempts(userEntity.getFailedLoginAttempts());
-        log.info("Session Dto {} created",sessionDto.getUsername());
+        log.info("Session Dto {} created", sessionDto.getUsername());
         return sessionDto;
+    }
+
+    @Override
+    public int getCurrentFailedLoginAttemptCount(Optional<UserEntity> userEntity) {
+        if (userEntity.isPresent()) {
+            return userRepository.findByUsername(userEntity.get().getUsername()).get().getFailedLoginAttempts();
+        } else {
+            return 0;
+        }
     }
 }
