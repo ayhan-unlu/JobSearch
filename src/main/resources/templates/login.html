@@ -13,6 +13,13 @@
 
 <!-- http://localhost:8080/login -->
 
+<div th:if="${param.error}">
+    <span th:if="${param.error[0] == 'blocked'}"
+    style="color:red;"
+    th:text="'Account is Blocked'">
+    </span>
+</div>
+
 <div>
     <form th:action="@{/login}" th:object="${loginDto}" method="post">
         <label th:text="'Username'"></label>

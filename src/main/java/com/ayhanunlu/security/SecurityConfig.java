@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -80,6 +81,13 @@ public class SecurityConfig {
         httpSecurity
                 .formLogin(form -> form
                                 .loginPage("/login")
+                                .failureHandler((request, response, exception) -> {
+                                    if (exception instanceof LockedException) {
+                                        response.sendRedirect("/login?error=blocked");
+                                    } else {
+                                        response.sendRedirect("/login?error");
+                                    }
+                                })
 //                        .defaultSuccessUrl("/admin_dashboard", true)
 //                        .defaultSuccessUrl("/user_dashboard",true)
                                 .successHandler((request, response, authentication) -> {
@@ -104,7 +112,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    public AuthenticationProvider authenticationProvider() {
         return customAuthenticationProvider;
     }
 

@@ -61,7 +61,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                     increaseFailedLoginAttemptsOne(foundUserEntity);
                     if (foundUserEntity.get().getFailedLoginAttempts() >= 3) {
                         blockUser(foundUserEntity);
-                        throw new LockedException(username);
+                        throw new LockedException("blocked");
                     } else {
                         log.error("Authentication failed: Bad credentials for username {}", foundUserEntity.get().getUsername());
                         throw new BadCredentialsException(username);
