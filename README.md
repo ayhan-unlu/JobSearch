@@ -131,6 +131,33 @@ src/main/resources/
 ├── templates/ (Thymeleaf views)
 └── application.properties
 
+SCREEN SHOTS
+
+>>![Screenshot 2025-12-24 at 22.53.43.png](screenshots/Screenshot%202025-12-24%20at%2022.53.43.png)
+>
+>>![Screenshot 2025-12-24 at 22.54.01.png](screenshots/Screenshot%202025-12-24%20at%2022.54.01.png)
+>
+>>![Screenshot 2025-12-24 at 22.54.18.png](screenshots/Screenshot%202025-12-24%20at%2022.54.18.png)
+>
+>>![Screenshot 2025-12-24 at 22.54.41.png](screenshots/Screenshot%202025-12-24%20at%2022.54.41.png)
+>
+>>![Screenshot 2025-12-24 at 22.56.17.png](screenshots/Screenshot%202025-12-24%20at%2022.56.17.png)
+>
+>>![Screenshot 2025-12-24 at 22.56.30.png](screenshots/Screenshot%202025-12-24%20at%2022.56.30.png)
+>
+>>![Screenshot 2025-12-24 at 22.56.49.png](screenshots/Screenshot%202025-12-24%20at%2022.56.49.png)
+>
+>>![Screenshot 2025-12-24 at 22.57.01.png](screenshots/Screenshot%202025-12-24%20at%2022.57.01.png)
+>
+>>![Screenshot 2025-12-24 at 22.57.57.png](screenshots/Screenshot%202025-12-24%20at%2022.57.57.png)
+>
+>>![Screenshot 2025-12-24 at 22.59.07.png](screenshots/Screenshot%202025-12-24%20at%2022.59.07.png)
+>
+>>![Screenshot 2025-12-24 at 22.59.25.png](screenshots/Screenshot%202025-12-24%20at%2022.59.25.png)
+>
+>>![Screenshot 2025-12-24 at 23.00.09.png](screenshots/Screenshot%202025-12-24%20at%2023.00.09.png)
+>
+
 📄 License
 
 This project is licensed under MIT License, allowing free use, modification, and distribution.

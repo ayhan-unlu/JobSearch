@@ -69,21 +69,6 @@
 </div>
 
 
-<!--
-<div>
-    <h1 class="text-center"
-        th:text="${sessionDto != null}
-        ? 'Admin ' + sessionDto.username + ' Welcome To Dashboard'
-        :'Admin Dashboard Without sessionDto'">
-
-    </h1>
-</div>
--->
-<!--
-<div class="text-center mt-4">
-<a th:href="@{/logout}" class="btn btn-primary" th:text="'Logout'"></a>
-</div>
--->
 <div class="text-center mt-4">
     <form th:action="@{/logout}" th:method="post">
         <button type="submit" th:text="'Logout'"></button>
